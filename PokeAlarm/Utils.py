@@ -228,6 +228,17 @@ def get_pokemon_gender(gender):
         return u'\u26b2'  #neutral
     return '?' # catch all
 
+# Returns the team color heart of a gym:
+def get_team_icon(team_id):
+    if team_id == 1:
+        return u'\U0001F499'  # Team Mystic
+    elif team_id == 2:
+        return u'\u2764'      # Team Valor
+    elif team_id == 3:
+        return u'\U0001F49B'  # Team Instinct
+    else:
+        return u'\u2661'      # neutral
+
 
 ########################################################################################################################
 

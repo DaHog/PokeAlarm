@@ -15,7 +15,7 @@ from Filters import load_pokemon_section, load_pokestop_section, load_gym_sectio
     load_raid_section
 from Locale import Locale
 from Utils import get_cardinal_dir, get_dist_as_str, get_earth_dist, get_path, get_time_as_str, \
-    require_and_remove_key, parse_boolean, contains_arg
+    require_and_remove_key, parse_boolean, contains_arg, get_team_icon
 from Geofence import load_geofence_file
 from LocationServices import LocationService
 
@@ -876,6 +876,9 @@ class Manager(object):
         start_time_str = get_time_as_str(egg['raid_begin'], self.__timezone)
 
         gym_info = self.__gym_info.get(gym_id, {})
+        
+        #team id saved in self.__gym_hist when processing gym
+        team_id = self.__gym_hist.get(gym_id, '?')
 
         egg.update({
             "gym_name": gym_info.get('name', 'unknown'),
@@ -888,7 +891,10 @@ class Manager(object):
             'begin_12h_time': start_time_str[1],
             'begin_24h_time': start_time_str[2],
             "dist": get_dist_as_str(dist),
-            'dir': get_cardinal_dir([lat, lng], self.__location)
+            'dir': get_cardinal_dir([lat, lng], self.__location),
+            'team_id': team_id,
+            'team_name': self.__locale.get_team_name(team_id),
+            'team_icon': get_team_icon(team_id)
         })
 
         threads = []
@@ -1006,7 +1012,8 @@ class Manager(object):
             'charge_move': self.__locale.get_move_name(charge_id),
             'form': self.__locale.get_form_name(pkmn_id, raid_pkmn['form_id']),
             'team_id': team_id,
-            'team_name': self.__locale.get_team_name(team_id)
+            'team_name': self.__locale.get_team_name(team_id),
+            'team_icon': get_team_icon(team_id)
         })
 
         threads = []
