@@ -702,8 +702,8 @@ class Manager(object):
         # Update Gym details (if they exist)
         if gym_id not in self.__gym_info or gym['name'] != 'unknown':
             self.__gym_info[gym_id] = {
-                "name": gym['name'],
-                "description": gym['description'],
+                "name": gym['name'].strip(),
+                "description": gym['description'].strip(),
                 "url": gym['url']
             }
 
